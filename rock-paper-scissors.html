@@ -1,19 +1,127 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rock, Paper, Scissors</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <script>
-            function getComputerChoice() {
-                let list = ['Rock', 'Paper', 'Scissors'];
-                let randomNumber = Math.floor(Math.random() * 4);
-                return list[randomNumber];
-            }            
+        <div class="instructions">
+            <h1>First to win 5 round wins</h3>
+        </div>
+        <div class="buttons">
+            <button id="rock" value="rock">Rock</button>
+            <button id="paper" value="paper">Paper</button>
+            <button id="scissors" value="scissors">Scissors</button>
             
-            let computerChoice = getComputerChoice();
-            console.log(computerChoice);
+        </div>
+        <div class = "results">
+
+
+        </div>
+        
+        <script>
+
+            function game (){
+                    let player = 0;
+                    let computer = 0;
+                    let roundCount = 0;
+                    function getComputerChoice() {
+                        let list = ['rock', 'paper', 'scissors'];
+                        let randomNumber = Math.floor(Math.random() * 3);
+                        console.log(randomNumber);
+                        return list[randomNumber];
+                    }
+
+                    function displayResults (winner)
+                    {
+                        let textResults = document.querySelector(".results");
+                        text = document.createElement('p');
+                        text.textContent = winner;
+                        text.style.cssText = "color: blue; font-size: 20px; display: flex; justify-content: center";
+                        textResults.appendChild(text);
+                    }
+
+                    function playRound (playerSelection, computerSelection) {
+                        if ((playerSelection === 'paper' && computerSelection === 'rock') ||
+                                    (playerSelection === 'scissors' && computerSelection === 'paper') ||
+                                    (playerSelection === 'rock' && computerSelection === 'scissors'))
+                        {
+                            
+                            player++;
+                            roundCount++;
+                            displayResults(`Round ${roundCount}: You won!!! ${playerSelection} beats ${computerSelection}  (You: ${player}, Computer: ${computer})`);
+                            
+                                
+                        }
+                        else if (playerSelection === computerSelection)
+                        {
+                            roundCount++;
+                            displayResults(`Round ${roundCount}: It's a tie!!!`);
+                        }
+                        else
+                        {
+                            computer++;
+                            roundCount++;
+                            displayResults(`Round ${roundCount}: You lost!!! ${computerSelection} beats ${playerSelection}  (You: ${player}, Computer: ${computer})`);
+                            
+                        }
+                    } 
+
+
+                    /*if (playRound(playerSelection, computerSelection) == 'win')
+                            {
+                                console.log(`You win, ${playerSelection}  beats ${computerSelection}`);
+                                playerWIns++;
+                            }
+                            else if (playRound(playerSelection, computerSelection) == 'lose')
+                            {
+                                console.log(`You lose, ${computerSelection}  beats ${playerSelection}`);
+                                computerWins++;
+                            }
+                            else if (playRound(playerSelection, computerSelection) == 'draw')
+                            {
+                                console.log("It is a draw!");
+                            } */
+                    
+                    let buttons = document.querySelectorAll('button');
+                    buttons.forEach( button => {
+                        button.addEventListener("click", () => {
+                            let computerSelection = getComputerChoice();
+                            let playerSelection = button.value;
+                            playRound(playerSelection, computerSelection);
+                            if (player == 5 || computer == 5)
+                            {
+                                if(player>computer)
+                                {
+                                    alert("Player wins");
+                                }
+                                else
+                                {
+                                    alert("Computer wins");
+                                }
+                            }
+                            
+                        });
+                    });
+
+            }
+
+            
+
+            let winner = game();
+
+            if (winner == 'player')
+            {
+                console.log("player wins");
+            }
+            else if (winner == 'computer')
+            {
+                console.log("computer wins");
+            }
+
         </script>
     </body>
 </html>
